@@ -1,0 +1,41 @@
+### --- SEGURANÇA ---
+# Impede que as chaves do Azure subam para o GitHub
+appsettings.json
+appsettings.Development.json
+.env
+.secrets
+
+### --- .NET (API C#) ---
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+
+### --- PYTHON (STREAMLIT) ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.streamlit/config.toml
+
+### --- LATEX (DENTRO DA PASTA DOCS) ---
+# Ignora os ficheiros auxiliares que o LaTeX gera ao compilar
+docs/*.aux
+docs/*.log
+docs/*.toc
+docs/*.out
+docs/*.fdb_latexmk
+docs/*.fls
+docs/*.synctex.gz
+docs/*.pdf
+docs/*.bbl
+docs/*.blg
+docs/*.lof
+docs/*.lot
+
+### --- SISTEMA ---
+.DS_Store
+Thumbs.db
