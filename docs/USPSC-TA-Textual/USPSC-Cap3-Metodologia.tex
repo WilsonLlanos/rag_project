@@ -1,0 +1,28 @@
+\chapter{Metodologia} \label{Cap:Metodologia}
+\subsection{Ambiente de Desenvolvimento e Implementação da PoC}
+
+Para a viabilização da Prova de Conceito (PoC) proposta neste trabalho, estruturou-se um ecossistema de desenvolvimento focado em escalabilidade e integração corporativa. A escolha das ferramentas buscou alinhar a agilidade necessária para um projeto acadêmico com a robustez exigida pelo ambiente de trading de commodities.
+
+\subsubsection{Stack Tecnológica e Infraestrutura}
+
+A solução foi desenvolvida utilizando o framework \textbf{.NET 9}, aproveitando sua alta performance e compatibilidade com os sistemas legados da organização. Como ambiente de desenvolvimento principal, utilizou-se o \textbf{Visual Studio Code}, devido à sua natureza multiplataforma e ecossistema de extensões que facilitam a integração com serviços em nuvem.
+
+A infraestrutura de Inteligência Artificial foi centralizada na plataforma \textbf{Microsoft Azure}, utilizando especificamente os serviços:
+\begin{itemize}
+    \item \textbf{Azure OpenAI Service}: Responsável pela execução do modelo de linguagem (LLM) e geração de \textit{embeddings};
+    \item \textbf{Azure AI Search}: Utilizado como motor de busca vetorial para a recuperação de documentos relevantes (RAG).
+\end{itemize}
+
+\subsubsection{Gerenciamento de Dependências e Orquestração}
+
+O gerenciamento de bibliotecas externas foi realizado via \textbf{NuGet}, o gestor de pacotes oficial do ecossistema .NET. O componente central da arquitetura de software é o \textbf{Semantic Kernel}, um SDK de código aberto da Microsoft que atua como o orquestrador da solução. O uso do Semantic Kernel permitiu a abstração da camada de IA, facilitando a criação de \textit{pipelines} que conectam o código nativo em C\# aos modelos de linguagem de forma estruturada.
+
+\subsubsection{Desafios de Configuração e Versionamento}
+
+Um dos desafios técnicos identificados durante a implementação foi a volatilidade das bibliotecas de IA generativa. Devido ao rápido avanço das tecnologias de busca vetorial no Azure, foi necessária a adoção de versões \textit{preview} e \textit{beta} de pacotes específicos (como o \texttt{Azure.AI.OpenAI} e \texttt{Azure.Search.Documents}). Essa decisão foi fundamental para garantir a compatibilidade com os algoritmos mais recentes de \textit{Vector Search} e para possibilitar a integração nativa com o orquestrador selecionado.
+
+
+
+
+
+
