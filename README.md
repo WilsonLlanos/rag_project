@@ -1,4 +1,4 @@
-# Suporte Inteligente N1 com RAG (MBA USP)
+# Suporte Inteligente N1 com RAG
 
 Este projeto apresenta uma Prova de Conceito (PoC) de um sistema de suporte técnico de Nível 1, utilizando arquitetura **RAG (Retrieval-Augmented Generation)** para resolver a carência de documentação em sistemas de trading de café.
 
