@@ -147,7 +147,7 @@
 % ---
 % Hifenizacao e caracteres especiais portugues-brasil por padrao
 % ---
-\RequirePackage[brazil]{babel}
+\RequirePackage[brazilian]{babel}
 %
 % Nomes constantes do abnTeX2 em portugues (definicoes padroes)
 \newcommand{\folhaderostoname}{Folha de rosto}
@@ -672,20 +672,20 @@
 
 % No caso de Sumario (TOC) especifico da ABNT-6027-2012
 
-\makeatletter
-\ifthenelse{\boolean{ABNTEXsumario-abnt-6027-2012}}{
-\settocpreprocessor{chapter}{%
-\let\tempf@rtoc\f@rtoc%
-\def\f@rtoc{%
-	\texorpdfstring{\MakeTextUppercase{\tempf@rtoc}}{\tempf@rtoc}}%
-}
-\settocpreprocessor{part}{%
-\let\tempf@rtoc\f@rtoc%
-\def\f@rtoc{%
-	\texorpdfstring{\MakeTextUppercase{\tempf@rtoc}}{\tempf@rtoc}}%
-}
-}{}
-\makeatother
+% \makeatletter
+% \ifthenelse{\boolean{ABNTEXsumario-abnt-6027-2012}}{
+% \settocpreprocessor{chapter}{%
+% \let\tempf@rtoc\f@rtoc%
+% \def\f@rtoc{%
+% 	\texorpdfstring{\MakeTextUppercase{\tempf@rtoc}}{\tempf@rtoc}}%
+% }
+% \settocpreprocessor{part}{%
+% \let\tempf@rtoc\f@rtoc%
+% \def\f@rtoc{%
+% 	\texorpdfstring{\MakeTextUppercase{\tempf@rtoc}}{\tempf@rtoc}}%
+% }
+% }{}
+% \makeatother
 %
 \ifthenelse{\boolean{ABNTEXsumario-abnt-6027-2012}}{%
 
@@ -1272,7 +1272,7 @@
 % ---
 
 % Chamanda para dados pre-textuais
-\include{USPSC-unidades}  
+\input{USPSC-unidades}
 %
 
 % ------------------------------------------------------------------------

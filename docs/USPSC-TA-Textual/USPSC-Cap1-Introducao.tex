@@ -1,1 +1,27 @@
-\chapter{Introdução} \label{Cap:Introdução}
+\chapter{Introdução} \label{Cap:Introducao}
+
+O mercado de \textit{commodities} agrícolas, especificamente o setor cafeeiro, exige uma dinâmica operacional de alta precisão, onde a rastreabilidade e a conformidade técnica são pilares para a competitividade global. No contexto brasileiro, maior produtor e exportador mundial de café, a digitalização dos processos de compra, classificação e venda gerou um volume massivo de dados transacionais e manuais normativos complexos, exigindo abordagens robustas para a manutenção de aplicações intensivas em dados (KLEPPMANN, 2017).
+
+\section{Contextualização e Problema}
+
+Dentro das organizações de \textit{trading}, o suporte técnico de Nível 1 (N1) enfrenta desafios críticos. Entre os principais está a escassez ou fragmentação da documentação técnica: sistemas que passaram por diversas releituras tecnológicas ao longo dos anos acabam por carregar regras de negócio complexas, muitas vezes distribuídas entre camadas de código e procedimentos no banco de dados. Essa fragmentação prejudica a gestão eficiente do conhecimento corporativo (DAVENPORT; PRUSAK, 1998). Além disso, a operação depende de dados oriundos de integrações sensíveis com outros sistemas legados.
+
+Este cenário dificulta o entendimento do usuário sobre como proceder em casos excepcionais e eleva consideravelmente a curva de aprendizado de novos colaboradores, criando uma barreira na conversão do conhecimento tácito e operacional em conhecimento explícito (NONAKA; TAKEUCHI, 1995). Como resultado, ocorrem erros operacionais no preenchimento de diversas interfaces do ecossistema do café. Somam-se a isso erros recorrentes como as inconsistências em dados estruturados, a exemplo dos resíduos de estoque infinitesimais decorrentes de problemas de representação em arredondamentos decimais (KLEPPMANN, 2017), que geram ruído nas telas de consulta e sobrecarregam as equipes de TI com chamados de correção manual.
+
+A carência de uma interface que unifique o conhecimento documental com a realidade dos dados transacionais cria um hiato de eficiência, onde o usuário final depende excessivamente de especialistas humanos para resolver dúvidas procedimentais e técnicas básicas.
+
+\section{Objetivos}
+
+O objetivo principal deste trabalho é o desenvolvimento de uma Prova de Conceito (PoC) de um sistema de suporte inteligente baseado na arquitetura \textbf{RAG (Retrieval-Augmented Generation)} (LEWIS et al., 2020). A solução busca não apenas recuperar informações de manuais técnicos (conhecimento não estruturado), mas também interagir com a base de dados relacional (conhecimento estruturado) para diagnosticar e sugerir correções, tudo isso, aplicando diretrizes de governança e segurança da informação com ferramentas nativas do \textit{Azure} e implementações específicas.
+
+Como objetivos específicos, destacam-se:
+\begin{itemize}
+    \item Implementar a orquestração da solução utilizando a linguagem Python e os SDKs nativos do \textit{Azure OpenAI}, integrando modelos de linguagem de larga escala (LLM) baseados na arquitetura \textit{Transformer} (VASWANI et al., 2017);
+    \item Desenvolver um motor de busca vetorial via \textit{Azure AI Search} para a indexação e recuperação semântica de manuais em formato \textit{Markdown};
+    \item Desenvolver integrações de chamadas de função (\textit{Function Calling}) nativas para consulta, diagnóstico e automação de integridade de dados em ambiente \textit{Azure SQL};
+    \item Aplicar diretrizes de governança e segurança da informação através da biblioteca \textit{Microsoft Presidio} no mascaramento de Dados Pessoalmente Identificáveis (PII) em trânsito e também do controle de acesso nativo do \textit{Azure} para mitigar o risco de vazamento de dados corporativos.
+\end{itemize}
+
+\section{Justificativa}
+
+A implementação de uma arquitetura de RAG Híbrido justifica-se pela necessidade de transformar o suporte técnico de reativo em proativo. Ao dotar o sistema de capacidades agênticas, permite-se que a IA identifique, por exemplo, por que um lote não está disponível para venda ou reconheça saldos residuais que devem ser zerados, promovendo a autogestão do usuário e preservando a integridade do \textit{Big Data} corporativo.

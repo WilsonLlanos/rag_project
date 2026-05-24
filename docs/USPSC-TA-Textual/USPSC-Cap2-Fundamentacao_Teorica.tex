@@ -1,1 +1,44 @@
 \chapter{Fundamentação Teórica} \label{Cap:Fund_Teo}
+
+Este capítulo apresenta conceitos fundamentais que sustentam o desenvolvimento desta Prova de Conceito, abordando desde os modelos de linguagem de larga escala até as arquiteturas modernas de recuperação de informações e orquestração de agentes autônomos.
+
+\section{Gestão de Conhecimento em Sistemas de Missão Crítica}
+
+O mercado de \textit{trading} cada vez mais se vê em um cenário competitivo e desafiador, confrontado com inovações tecnológicas e dinâmicas globais que colocam à prova décadas de regras de negócio consolidadas. Em meio a este cenário, destacam-se os sistemas logísticos de \textit{commodities} (como o café e o algodão), responsáveis pela rastreabilidade ponta a ponta: desde a origem na fazenda até a entrega ao cliente final em embarques marítimos ou vendas domésticas.
+
+O problema central reside no acúmulo de procedimentos criados, alterados e descontinuados ao longo dos anos. Essas regras, frequentemente distribuídas em sistemas legados distintos e repassadas de forma não estruturada entre analistas e \textit{traders}, tornam a curva de aprendizagem uma barreira severa. Consequentemente, gera-se uma demanda excessiva ao suporte de TI (Nível 1), motivada por dúvidas operacionais e erros sistêmicos provocados por usuários inexperientes. Esse cenário reflete a necessidade crítica de capturar e gerenciar o conhecimento corporativo, evitando que o \textit{know-how} se perca ou fique restrito ao conhecimento tácito de poucos indivíduos (DAVENPORT; PRUSAK, 1998).
+
+\section{A Evolução do Atendimento Nível 1: Do \textit{Script} ao Agente Inteligente}
+
+Atualmente, a operação depende fortemente da experiência de colaboradores-chave, evidenciando a fragilidade da dependência do conhecimento não documentado (NONAKA; TAKEUCHI, 1995). A inserção de um Modelo de Linguagem de Larga Escala (LLM) no próprio ecossistema do usuário permite a identificação ágil de problemas, mesmo quando relatados sem jargões técnicos. Modelos baseados na arquitetura \textit{Transformer} possuem a capacidade de interpretar contextos complexos a partir de interações em linguagem natural (VASWANI et al., 2017).
+
+A principal vantagem operacional dessa abordagem é a redução drástica do \textit{Lead Time} de resposta no suporte de primeiro nível, liberando a equipe de engenharia e sustentação para focar em incidentes de alta complexidade e inovações arquiteturais.
+
+\section{Arquitetura RAG: \textit{Grounding} e Busca Semântica}
+
+Após a popularização da IA generativa, observou-se uma urgência corporativa na adoção de LLMs, muitas vezes motivada pelo \textit{Fear of Missing Out} (FOMO) ou resultando em iniciativas superficiais (\textit{AI Washing}). Sem um planejamento focado em Retorno sobre Investimento (ROI), projetos falham por falta de precisão técnica. 
+
+Para contornar este risco, a solução proposta adota a arquitetura \textit{Retrieval-Augmented Generation} (RAG) (LEWIS et al., 2020). Essa técnica une a fluência dos modelos de linguagem à recuperação assertiva de fatos. A IA é "ancorada" (\textit{Grounding}) estritamente em documentos normativos da organização, convertidos para o formato \textit{Markdown} e indexados em nuvem, impedindo que o modelo invente (alucine) regras de classificação do café.
+
+A eficiência do RAG neste projeto reside na transição da busca tradicional por palavras-chave para a \textbf{Busca Vetorial e Semântica}. O \textit{Azure AI Search} utiliza modelos de \textit{embeddings} para converter o conhecimento contido nos manuais em vetores numéricos multidimensionais. Neste modelo, se um usuário questiona sobre "café com defeito", o sistema identifica proximidade matemática com "problema na classificação física". Conceitos semânticos ocupam coordenadas próximas, superando as divergências de vocabulário entre o usuário e o sistema.
+
+\section{\textit{Big Data} e Integridade Transacional (O Fator SQL)}
+
+Em um ambiente de processamento intensivo de dados, a qualidade da informação depende da precisão numérica e da modelagem rigorosa (KLEPPMANN, 2017). Na movimentação de \textit{commodities}, as divisões fracionárias de lotes são constantes e a escolha dos tipos de dados transacionais é crítica.
+
+Diferente de sistemas genéricos, o controle de estoque de café exige o uso estrito de tipos numéricos de ponto fixo, como o \texttt{DECIMAL(18,10)}. A integração com sistemas legados que ainda utilizam representações de ponto flutuante (\texttt{FLOAT}) introduz erros de arredondamento cumulativos em sua representação binária, resultando em diferenças financeiras em auditorias. 
+
+Neste projeto, a IA atua na observabilidade de dados. O agente autônomo pode identificar proativamente inconsistências em linhas de banco de dados, como saldos residuais microscópicos (ex: 0,0000152 sacas), e sugerir ou aplicar correções em tempo real, automatizando o saneamento de dados que, de outra forma, sobrecarregaria o fechamento mensal da equipe de engenharia de dados.
+
+\section{Orquestração, \textit{Function Calling} e Governança}
+
+A inteligência da arquitetura não se limita à geração de texto, mas reside em sua capacidade de planejamento e execução de ferramentas. Através do uso de SDKs nativos em linguagem Python, o sistema implementa o \textit{Tool Calling} (ou \textit{Function Calling}), recurso que permite ao modelo de IA interagir bidirecionalmente com a infraestrutura.
+
+Ao receber uma dúvida complexa, o agente não apenas elabora uma resposta isolada, mas executa um fluxo orquestrado:
+\begin{enumerate}
+    \item Recupera a norma técnica no banco vetorial (\textit{Azure AI Search});
+    \item Invoca uma função nativa para consultar o estado real do lote no banco relacional (\textit{Azure SQL});
+    \item Sintetiza ambas as fontes para justificar, por exemplo, que um lote não pode ser vendido por pendência de Classificação Definitiva (CD), e não por um \textit{bug} sistêmico.
+\end{enumerate}
+
+Por fim, a governança dessa arquitetura híbrida é assegurada pelo princípio do menor privilégio e pela anonimização local. Em vez de conexões abertas, as chamadas de banco de dados são encapsuladas em funções específicas na API. Além disso, a aplicação de ferramentas de Processamento de Linguagem Natural (\textit{middleware} como o \textit{Microsoft Presidio}) mascara dados sensíveis (PII) antes do envio do \textit{prompt} à nuvem, garantindo a rastreabilidade técnica sem expor a confidencialidade das transações de \textit{trading}.
