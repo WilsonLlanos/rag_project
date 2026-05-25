@@ -39,9 +39,7 @@ rag_project/
 Como Executar (Ambiente de Desenvolvimento)
 
 ## Pré-requisitos do Sistema
-Para integração com o SQL Server via pyodbc, é necessário que o ambiente possua o driver ODBC instalado no SO antes da instalação das dependências do Python:
-
-Windows: Instalação ODBC para SQL Server - https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver17
+Para integração com o SQL Server via pyodbc, é preciso que o ambiente tenha driver ODBC instalado no Sistema operacional antes da instalação das dependências do Python.
 
 1. Backend (FastAPI)
 Vá até a pasta da API, instale as dependências e rode o servidor:
