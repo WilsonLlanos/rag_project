@@ -23,12 +23,13 @@ A solução foi desenvolvida visando microsserviços ágeis, nativos e integrado
 
 ## Estrutura do Repositório
 
+```text
 rag_project/
 ├── src/
 │   ├── api/              # Backend Inteligente (FastAPI)
 │   │   ├── main.py       # Configuração das rotas (Endpoints via Pydantic)
-│   │   ├── rag_service.py # Cérebro: Tool Calling, System Prompt e Integração OpenAI
-│   │   └── indexer.py    # ETL Vetorial (Fatiamento e Upsert para o Azure AI Search)
+│   │   ├── rag_service.py# Cérebro: Tool Calling, System Prompt e Integração
+│   │   └── indexer.py    # ETL Vetorial (Fatiamento e Upsert para Azure AI)
 │   └── frontend/         # Interface e captura de contexto de tela
 │       └── app.py        # Aplicação Streamlit
 ├── docs/                 # Documentação acadêmica (LaTeX/TCC - Padrão USPSC)
