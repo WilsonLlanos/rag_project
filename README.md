@@ -1,6 +1,6 @@
 # Suporte Inteligente N1 com RAG
 
-Este projeto apresenta uma Prova de Conceito (PoC) de um sistema para suporte de Nível 1, usando arquitetura **RAG (Retrieval-Augmented Generation)** Híbrida que utiliza banco vetorial que armazena documentação e regras dos sistema e negócio, e banco relacional para consultas e alterações específicas ativadas pelo LLM através de Tool Callings. Esta solução integra boas práticas de Engenharia de Dados, IA e segurança da informação
+Este projeto apresenta uma Prova de Conceito (PoC) de um sistema para suporte de Nível 1, usando arquitetura **RAG (Retrieval-Augmented Generation)** Híbrida que utiliza banco vetorial que armazena documentação e regras dos sistema e negócio, e banco relacional para consultas e alterações específicas ativadas pelo LLM através de Tool Callings, além de integração de boas práticas de Engenharia de Dados, IA e segurança da informação
 
 ## Arquitetura da Solução
 
