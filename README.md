@@ -65,14 +65,14 @@ Configuração e Segurança
 O projeto adota uma prática de Privacy by Design. Nenhuma chave ou dado sensível é exposto. Crie um arquivo .env na raiz do projeto (ou na pasta da API) baseado no modelo abaixo para se conectar aos serviços do Azure:
 
 # Azure OpenAI
-AZURE_OPENAI_ENDPOINT="SUA_URL_DO_OPENAI"
-AZURE_OPENAI_API_KEY="SUA_CHAVE_DO_OPENAI"
+AZURE_OPENAI_ENDPOINT="URL_DO_OPENAI"
+AZURE_OPENAI_API_KEY="CHAVE_DO_OPENAI"
 AZURE_OPENAI_DEPLOYMENT_NAME="gpt-4o"
 OPENAI_API_VERSION="2024-02-15-preview"
 
 # Azure AI Search
-AZURE_SEARCH_ENDPOINT="SUA_URL_DO_SEARCH"
-AZURE_SEARCH_API_KEY="SUA_CHAVE_ADMIN_DO_SEARCH"
+AZURE_SEARCH_ENDPOINT="URL_DO_SEARCH"
+AZURE_SEARCH_API_KEY="CHAVE_ADMIN_DO_SEARCH"
 AZURE_SEARCH_INDEX_NAME="indice-manuais-cafe"
 
 # Azure SQL Database
