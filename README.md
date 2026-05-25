@@ -29,11 +29,9 @@ rag_project/
 │   ├── api/              # Backend Inteligente (FastAPI)
 │   │   ├── main.py       # Configuração das rotas (Endpoints via Pydantic)
 │   │   ├── rag_service.py# Cérebro: Tool Calling, System Prompt e Integração
-│   │   └── indexer.py    # ETL Vetorial (Fatiamento e Upsert para Azure AI)
-│   └── frontend/         # Interface e captura de contexto de tela
-│       └── app.py        # Aplicação Streamlit
-├── docs/                 # Documentação acadêmica (LaTeX/TCC - Padrão USPSC)
-├── .env                  # Variáveis de ambiente (ignorado no Git)
+│   │   └── indexer.py    # ETL Vetorial (Fatiamento dos documentos e Upsert para Azure AI)
+│   └── frontend/         # Interface para contexto de tela
+│       └── app.py        # Streamlit
 ├── .gitignore            # Proteção de chaves e arquivos temporários
 └── README.md
 </pre>
@@ -41,12 +39,12 @@ rag_project/
 Como Executar (Ambiente de Desenvolvimento)
 
 ## Pré-requisitos do Sistema
-Devido à integração com o SQL Server via pyodbc, é necessário que o ambiente possua o driver ODBC correto instalado no SO antes da instalação das dependências Python:
+Para integração com o SQL Server via pyodbc, é necessário que o ambiente possua o driver ODBC instalado no SO antes da instalação das dependências do Python:
 
-Windows/Linux/macOS: Instalação do Microsoft ODBC Driver 18 for SQL Server - https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver17
+Windows: Instalação ODBC para SQL Server - https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver17
 
 1. Backend (FastAPI)
-Navegue até a pasta da API, instale as dependências e inicie o servidor:
+Vá até a pasta da API, instale as dependências e rode o servidor:
 
 cd src/api
 pip install -r requirements.txt
