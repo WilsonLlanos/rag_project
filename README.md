@@ -23,7 +23,7 @@ A solução foi desenvolvida visando microsserviços ágeis, nativos e integrado
 
 ## Estrutura do Repositório
 
-```text
+<pre>
 rag_project/
 ├── src/
 │   ├── api/              # Backend Inteligente (FastAPI)
@@ -36,6 +36,7 @@ rag_project/
 ├── .env                  # Variáveis de ambiente (ignorado no Git)
 ├── .gitignore            # Proteção de chaves e arquivos temporários
 └── README.md
+</pre>
 
 Como Executar (Ambiente de Desenvolvimento)
 
