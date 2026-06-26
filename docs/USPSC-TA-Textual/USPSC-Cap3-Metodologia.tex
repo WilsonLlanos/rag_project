@@ -1,0 +1,49 @@
+\chapter{Metodologia, Proposta e Desenvolvimento} \label{Cap:Metodologia}
+
+\section{Stack Tecnológica e Infraestrutura}
+
+A solução foi desenvolvida utilizando \textbf{Python} aproveitando sua consolidação em engenharia de dados e inteligência artificial, em conjunto com o \textit{framework} \textbf{FastAPI} para a construção ágil e assíncrona da API. Como ambiente de desenvolvimento integrado (IDE), utilizou-se o \textbf{Visual Studio Code}.
+
+Toda a infraestrutura foi centralizada na plataforma \textbf{Microsoft Azure}, utilizando os seguintes serviços e bibliotecas:
+\begin{itemize}
+    \item \textbf{Azure OpenAI Service}: Para execução do modelo de linguagem (LLM) GPT-4o na orquestração de raciocínio e do modelo \textit{text-embedding-3-small} para a geração de \textit{embeddings};
+    \item \textbf{Azure AI Search}: Banco de dados vetorial utilizado para a indexação e recuperação semântica de documentos não estruturados (manuais de operação e normativas em \textit{Markdown}) \cite{baeza2011modern};
+    \item \textbf{Azure SQL Database}: Base de dados relacional onde está armazenado todos os dados transacionais da empresa como movimentação de lotes de compra e venda, fornecedores e logística de \textit{commodities}, mais especificamente do café;
+    \item \textbf{Microsoft Presidio}: \textit{Middleware} de Processamento de Linguagem Natural (NLP) executado localmente na API Python para a anonimização e proteção de Dados Pessoalmente Identificáveis (PII) antes da comunicação com os serviços cognitivos externos.
+\end{itemize}
+
+\section{Estratégia de Recuperação de Dados: RAG Híbrido}
+
+Diferente de implementações convencionais de RAG (focadas apenas em texto), esta Prova de Conceito adota uma abordagem \textbf{híbrida}. A arquitetura foi projetada para distinguir e sintonizar dois tipos de conhecimento no ecossistema do café:
+\begin{enumerate}
+    \item \textbf{Conhecimento Declarativo (Não Estruturado)}: Instruções de "como fazer" e regras de negócio, extraídas de manuais técnicos via busca vetorial no \textit{Azure AI Search}.
+    \item \textbf{Conhecimento Transacional (Estruturado)}: Dados de "estado atual" da operação logística, extraídos diretamente do \textit{Azure SQL} via consultas dinâmicas.
+\end{enumerate}
+
+\section{Integração de Ferramentas (\textit{Tool Calling}) e Comportamento Agêntico}
+
+A orquestração do sistema dispensou \textit{frameworks} complexos, adotando o uso direto dos recursos nativos de \textit{Tool Calling} (Chamada de Ferramentas) dos SDKs do \textbf{Azure OpenAI}. Estes componentes permitem que o LLM atue como um agente de decisão, capaz de identificar de forma autônoma quando uma dúvida do usuário exige a execução de um script Python para consultar ou realizar uma transação no banco de dados relacional. 
+
+Um exemplo crítico implementado nesta camada é a lógica de validação de disponibilidade de lotes para venda, baseado na disponibilidade de estoque de \textit{Classificação Definitiva} (CD) ou \textit{Provisória} (CP) no histórico de movimentação. Além disso, o sistema foi projetado com capacidades de automação de integridade, permitindo a identificação estruturada e sugestão de correção de saldos residuais (erros de arredondamento decimal, muitas vezes causados por distribuição incorreta de estoque pelos usuários), reduzindo a carga de suporte técnico (Nível 1).
+
+\section{Mapeamento Semântico via \textit{JSON Schemas}}
+
+A integração entre a intenção do usuário em linguagem natural e as funções procedimentais em Python foi viabilizada através da definição rigorosa de \textit{JSON Schemas}. Diferente de linguagens compiladas que utilizam atributos de reflexão no próprio código, a arquitetura com Python mapeia as funções disponíveis em um catálogo estruturado (dicionários) que é injetado no \textit{payload} da requisição da API.
+
+No desenvolvimento desta camada de orquestração, o detalhamento das ferramentas baseou-se em duas chaves fundamentais na assinatura do modelo:
+\begin{itemize}
+    \item \textbf{\texttt{name} e \texttt{parameters}}: Definem a assinatura técnica da função Python, especificando os argumentos obrigatórios (ex: ID do lote, tipo de classificação) e seus respectivos tipos de dados, garantindo que o modelo gere retornos tipados corretamente;
+    \item \textbf{\texttt{description}}: Campo de metadados onde se detalha, em linguagem natural clara, a finalidade estrita da função. 
+\end{itemize}
+
+O uso preciso dessas descrições é o que sustenta o comportamento de agente da \textit{PoC}. Quando o usuário realiza uma pergunta, o modelo \textbf{GPT-4o} não executa o código; ele realiza todo um processo de raciocínio (\textit{reasoning}) sobre o catálogo de ferramentas, uma abordagem fundamentada no paradigma \textit{ReAct} (Raciocínio e Ação) \cite{yao2022react}. Ao identificar uma correspondência semântica entre a dúvida do usuário e a \texttt{description} de uma ferramenta, o orquestrador suspende a geração de texto e devolve à API Python um comando formatado em JSON. A API, então, executa a consulta segura ao \textit{Azure SQL} e devolve os resultados fáticos ao LLM, que os utiliza para compor a resposta final ao usuário de forma fundamentada e segura.
+
+\section{Governança de Acesso e Anonimização de Dados (PII)}
+
+A implementação da segurança na arquitetura foi visando duas frentes complementares: o controle restrito de execução e a "sanitização" de dados em trânsito.
+
+Primeiramente, para mitigar riscos inerentes aos LLMs, como a injeção de comandos maliciosos (\textit{Prompt Injection}) \cite{owasp2023llm} e o vazamento transacional, a arquitetura garante que o modelo de linguagem nunca tenha acesso direto à \textit{connection string} ou às tabelas completas do \textit{Azure SQL}. A API desenvolvida em FastAPI atua como um \textit{proxy} de segurança: o modelo cognitivo gera apenas as intenções e parâmetros via \textit{JSON}, e a própria API executa consultas parametrizadas e restritas. Isso assegura a aplicação do Princípio do Menor Privilégio (\textit{Principle of Least Privilege}) \cite{saltzer1975protection}, permitindo que o sistema acesse apenas os dados estritamente necessários (como o saldo do lote específico consultado).
+
+A segunda camada foca na proteção de Dados Pessoalmente Identificáveis (PII) e informações comerciais sensíveis. O fluxo de orquestração integra o \textbf{Microsoft Presidio} para atuar antes de qualquer comunicação com o LLM. Quando um usuário insere um prompt de pergunta no Nível 1 contendo dados sigilosos da \textit{trading} (como o CNPJ de um fornecedor, nome de um corretor ou o valor exato de um contrato), o Presidio intercepta a requisição localmente. Utilizando Reconhecimento de Entidades Nomeadas (NER) \cite{jurafsky2023speech}, o \textit{middleware} mascara essas informações, substituindo-as por marcadores anônimos (por exemplo, substituindo o documento por \texttt{[BR\_CNPJ]}). 
+
+Dessa forma, o \textit{Azure OpenAI Service} recebe o contexto de forma suficiente para diagnosticar o erro sistêmico ou apenas explicar o processo a seguir, mas permanece sem os dados confidenciais, garantindo a conformidade e a governança integral do \textit{Big Data} da empresa.

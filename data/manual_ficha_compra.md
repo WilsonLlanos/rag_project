@@ -33,7 +33,16 @@ Abaixo estão as orientações para o preenchimento obrigatório de cada campo:
 
 ---
 
-### 3. Perguntas Frequentes (FAQ)
+### 3. Regras de Compliance e Regionalidade (Validação EISA)
+Para garantir a rastreabilidade e a qualidade do café adquirido, o sistema e os operadores devem respeitar **rigorosamente** as seguintes regras antes de fechar qualquer contrato:
+
+* **Regra de Qualidade (Arábica):** O café da qualidade **Arábica** só pode ser adquirido de fornecedores que possuam autorização para Arábica no banco de dados E que estejam localizados nos estados de São Paulo (**SP**), Minas Gerais (**MG**) ou Paraná (**PR**).
+* **Regra de Qualidade (Conillon):** O café da qualidade **Conillon** só pode ser adquirido de fornecedores que possuam autorização para Conillon no banco de dados E que estejam localizados nos estados do Espírito Santo (**ES**), Bahia (**BA**) ou Rondônia (**RO**).
+* **Regra de Cadastro Ativo:** Sob nenhuma circunstância um contrato pode ser salvo se o cadastro do fornecedor constar como inativo ou bloqueado (Ativo = 0) na base de dados, independentemente da região ou tipo de café.
+
+---
+
+### 4. Perguntas Frequentes (FAQ)
 > **Pergunta:** O que fazer se a saca não for de 60kg?
 > **Resposta:** O sistema Café-Trade é padronizado. Você deve realizar a conversão matemática para o equivalente a 60kg antes de inserir a quantidade no sistema.
 >
