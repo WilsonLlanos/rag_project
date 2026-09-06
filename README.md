@@ -77,3 +77,16 @@ AZURE_SEARCH_INDEX_NAME="indice-manuais-cafe"
 
 # Azure SQL Database
 SQL_CONNECTION_STRING="Driver={ODBC Driver 18 for SQL Server};Server=tcp:seu-servidor.database.windows.net,1433;Database=seu-banco;Uid=seu-usuario;Pwd=sua-senha;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+
+# Application Insights (opcional — observabilidade)
+APPLICATIONINSIGHTS_CONNECTION_STRING="InstrumentationKey=SUA_CHAVE;IngestionEndpoint=https://SEU_REGION.in.applicationinsights.azure.com/"
+
+# FinOps (opcional — preço por 1.000 tokens em USD, usado para estimar o custo de
+# cada chamada ao Azure OpenAI na tabela EventosConsumoLLM). Os defaults em
+# config.py são calibrados para GPT-4o-mini a partir da tabela pública de preços
+# do Azure OpenAI — CONFIRME o valor vigente na sua região/acordo de faturamento
+# antes de usar qualquer número calculado a partir daqui em uma análise de custo
+# real (ex.: o Cap. 5 do TCC associado a este projeto).
+PRECO_CHAT_ENTRADA_USD_POR_1K="0.00015"
+PRECO_CHAT_SAIDA_USD_POR_1K="0.00060"
+PRECO_EMBEDDING_USD_POR_1K="0.00002"
