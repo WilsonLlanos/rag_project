@@ -1,0 +1,23 @@
+services:
+  # Serviço da API (FastAPI)
+  api:
+    build:
+      context: ./src/api/RAG.Api
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./src/api/RAG.Api/.env
+    restart: always
+
+  # Serviço da Interface (Streamlit)
+  frontend:
+    build:
+      context: ./src/frontend
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://api:8000/chat  # para o chat
+      - API_BASE_URL=http://api:8000  # para buscar os lotes
+    depends_on:
+      - api
+    restart: always

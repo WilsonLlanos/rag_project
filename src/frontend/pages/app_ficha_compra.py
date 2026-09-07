@@ -1,8 +1,9 @@
 import streamlit as st
 import requests
+import os
 
 # 1. Configuração da página
-st.set_page_config(page_title="EISA - Ficha de Compra", layout="wide", page_icon="☕")
+st.set_page_config(page_title="Ficha de Compra", layout="wide", page_icon="☕")
 
 # Título e Contexto Global
 status_tela = "Ficha de Compra"
@@ -11,6 +12,8 @@ st.markdown("---")
 
 # 2. Formulário da Ficha de Compra
 col1, col2 = st.columns(2)
+
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
 
 with col1:
     # ordem: o usuário escolhe a qualidade e o estado primeiro
@@ -28,8 +31,8 @@ label_placeholder = "Selecione primeiro a Qualidade e o Estado"
 if qualidade != "" and estado != "":
     try:
         # Faz a chamada GET para o FastAPI passando os parâmetros na URL
-        api_get_url = f"http://localhost:8000/fornecedores?tipo_cafe={qualidade}&estado={estado}"
-        response_get = requests.get(api_get_url, timeout=5)
+        api_get_url = f"{API_BASE_URL}/fornecedores?tipo_cafe={qualidade}&estado={estado}"
+        response_get = requests.get(api_get_url, timeout=20)
         
         if response_get.status_code == 200:
             fornecedores_disponiveis = response_get.json().get("fornecedores", [])
@@ -62,8 +65,8 @@ st.markdown("---")
 col_espaco, col_ajuda = st.columns([0.6, 0.4])
 
 with col_ajuda:
-    with st.popover("💬 Precisa de Ajuda com esta Ficha?", use_container_width=True):
-        st.markdown("### 🤖 Assistente EISA - Aquisição")
+    with st.popover("Dúvidas? Fale com a IA", use_container_width=True):
+        st.markdown("### 🤖 Assistente")
         st.caption(f"Contexto: {status_tela}")
         
         # INICIALIZA A MEMÓRIA DO CHAT
@@ -107,7 +110,7 @@ with col_ajuda:
                 "historico": st.session_state.mensagens_chat_ficha[:-1]
             }
             
-            api_url = "http://localhost:8000/chat"
+            api_url = f"{API_BASE_URL}/chat"
             
             # 3. Chama a API e mostra a resposta da IA
             with caixa_chat:

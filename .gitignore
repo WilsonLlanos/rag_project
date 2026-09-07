@@ -36,6 +36,14 @@ docs/*.blg
 docs/*.lof
 docs/*.lot
 
+### --- CLAUDE CODE ---
+# .agents/ é um espelho local de plugins (ex: skill-creator), reinstala sozinho
+.agents/
+# Estado de runtime local, não é config do projeto
+.claude/scheduled_tasks.lock
+.claude/settings.local.json
+# .claude/skills/ FICA versionado de propósito (tooling do projeto)
+
 ### --- SISTEMA ---
 .DS_Store
 Thumbs.db
